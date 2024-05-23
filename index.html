@@ -3,42 +3,102 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Awesome Image Website Share</title>
+    <!-- Open Graph metadata -->
+    <meta property="og:title" content="Awesome Image" />
+    <meta property="og:description" content="Check out this awesome image!" />
+    <meta
+      property="og:image"
+      content="https://native-share.vercel.app/test.png"
+    />
+    <meta
+      property="og:url"
+      content="https://native-share.vercel.app/test.png"
+    />
   </head>
   <body>
     <img
       id="share-image"
       src="https://native-share.vercel.app/test.png"
       alt="Share Image"
-      style="display: none"
     />
     <div>
-        <button id="share-facebook">Share on Facebook</button>
-        <button id="share-linkedin">Share on LinkedIn</button>
-        <button id="share-twitter">Share on Twitter</button>
+      <button id="share-facebook">Share on Facebook</button>
+      <button id="share-linkedin">Share on LinkedIn</button>
+      <button id="share-twitter">Share on Twitter</button>
+      <button id="share-pinterest">Share on Pinterest</button>
+      <button id="native-share-button">Share</button>
     </div>
 
     <script>
-        document.getElementById('share-facebook').onclick = function() {
-            var imageUrl = document.getElementById('share-image').src;
-            var text = "Check out this awesome image!";
-            var facebookShareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(imageUrl) + "&quote=" + encodeURIComponent(text);
-            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
-        }
+      document.getElementById("share-facebook").onclick = function () {
+        var imageUrl = document.getElementById("share-image").src;
+        var text = "Check out this awesome image!";
+        var facebookShareUrl =
+          "https://www.facebook.com/sharer/sharer.php?u=" +
+          encodeURIComponent(imageUrl) +
+          "&message=" +
+          encodeURIComponent(text);
+        window.open(facebookShareUrl, "_blank", "width=600,height=400");
+      };
 
-        document.getElementById('share-linkedin').onclick = function() {
-            var imageUrl = document.getElementById('share-image').src;
-            var text = "Check out this awesome image!";
-            var linkedinShareUrl = "https://www.linkedin.com/shareArticle?mini=true&url=" + encodeURIComponent(imageUrl) + "&title=" + encodeURIComponent(text);
-            window.open(linkedinShareUrl, '_blank', 'width=600,height=400');
-        }
+      document.getElementById("share-linkedin").onclick = function () {
+        var imageUrl = document.getElementById("share-image").src;
+        var text = "Check out this awesome image!";
+        var linkedinShareUrl =
+          "https://www.linkedin.com/shareArticle?mini=true&url=" +
+          encodeURIComponent(imageUrl) +
+          "&title=" +
+          encodeURIComponent(text);
+        window.open(linkedinShareUrl, "_blank", "width=600,height=400");
+      };
 
-        document.getElementById('share-twitter').onclick = function() {
-            var imageUrl = document.getElementById('share-image').src;
-            var text = "Check out this awesome image!";
-            var twitterShareUrl = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(imageUrl) + "&text=" + encodeURIComponent(text);
-            window.open(twitterShareUrl, '_blank', 'width=600,height=400');
+      document.getElementById("share-twitter").onclick = function () {
+        var imageUrl = document.getElementById("share-image").src;
+        var text = "Check out this awesome image!";
+        var twitterShareUrl =
+          "https://twitter.com/intent/tweet?url=" +
+          encodeURIComponent(imageUrl) +
+          "&text=" +
+          encodeURIComponent(text);
+        window.open(twitterShareUrl, "_blank", "width=600,height=400");
+      };
+
+      document.getElementById("share-pinterest").onclick = function () {
+        var imageUrl = document.getElementById("share-image").src;
+        var text = "Check out this awesome image!";
+        var pinterestShareUrl =
+          "https://pinterest.com/pin/create/button/?url=" +
+          encodeURIComponent(imageUrl) +
+          "&description=" +
+          encodeURIComponent(text) +
+          "&media=" +
+          encodeURIComponent(imageUrl);
+        window.open(pinterestShareUrl, "_blank", "width=600,height=400");
+      };
+
+      document.getElementById("native-share-button").onclick = function () {
+        var imageUrl = document.getElementById("share-image").src;
+        var text = "Check out this awesome image!";
+        var url = imageUrl; // Assuming you want to share the image URL
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "Awesome Image",
+              text: text,
+              url: url,
+            })
+            .then(() => {
+              console.log("Successful share");
+            })
+            .catch((error) => {
+              console.error("Error sharing:", error);
+            });
+        } else {
+          alert("Your browser does not support the native share feature.");
         }
+      };
     </script>
-</body>
+  </body>
 </html>
