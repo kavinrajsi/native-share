@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <div id="mImageBox">
-        <img id='my_image' src='./test.png' alt='' width="auto" height="auto" onclick="fbs_click(this)"/>
-        </div>
-        
-        <script>
-             function fbs_click(TheImg) {
-             u=TheImg.src;
-             // t=document.title;
-            t=TheImg.getAttribute('alt');
-            window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;
+  </head>
+  <body>
+    <img
+      id="share-image"
+      src="https://native-share.vercel.app/test.png"
+      alt="Share Image"
+      style="display: none"
+    />
+    <div>
+        <button id="share-facebook">Share on Facebook</button>
+        <button id="share-linkedin">Share on LinkedIn</button>
+        <button id="share-twitter">Share on Twitter</button>
+    </div>
+
+    <script>
+        document.getElementById('share-facebook').onclick = function() {
+            var imageUrl = document.getElementById('share-image').src;
+            var text = "Check out this awesome image!";
+            var facebookShareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(imageUrl) + "&quote=" + encodeURIComponent(text);
+            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
         }
-        </script>
-        
+
+        document.getElementById('share-linkedin').onclick = function() {
+            var imageUrl = document.getElementById('share-image').src;
+            var text = "Check out this awesome image!";
+            var linkedinShareUrl = "https://www.linkedin.com/shareArticle?mini=true&url=" + encodeURIComponent(imageUrl) + "&title=" + encodeURIComponent(text);
+            window.open(linkedinShareUrl, '_blank', 'width=600,height=400');
+        }
+
+        document.getElementById('share-twitter').onclick = function() {
+            var imageUrl = document.getElementById('share-image').src;
+            var text = "Check out this awesome image!";
+            var twitterShareUrl = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(imageUrl) + "&text=" + encodeURIComponent(text);
+            window.open(twitterShareUrl, '_blank', 'width=600,height=400');
+        }
+    </script>
 </body>
 </html>
