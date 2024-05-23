@@ -6,6 +6,7 @@
     <title>Awesome Image Website Share</title>
     <!-- Open Graph metadata -->
     <meta property="og:title" content="Awesome Image" />
+    <meta property="og:type" content="article" />
     <meta property="og:description" content="Check out this awesome image!" />
     <meta
       property="og:image"
@@ -13,6 +14,13 @@
     />
     <meta
       property="og:url"
+      content="https://native-share.vercel.app"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Awesome Image" />
+    <meta name="twitter:description" content="Awesome Image Description" />
+    <meta
+      name="twitter:image"
       content="https://native-share.vercel.app/test.png"
     />
   </head>
@@ -31,16 +39,14 @@
     </div>
 
     <script>
+// NOTE: Need to look at how we can add an description
       document.getElementById("share-facebook").onclick = function () {
         var imageUrl = document.getElementById("share-image").src;
         var text = "Check out this awesome image!";
         var facebookShareUrl =
           "https://www.facebook.com/sharer/sharer.php?u=" +
           encodeURIComponent(imageUrl) +
-          "&description=" +
-          encodeURIComponent(text)+
-          "&caption=" +
-          encodeURIComponent(text);
+          "";
         window.open(facebookShareUrl, "_blank", "width=600,height=400");
       };
 
@@ -54,7 +60,7 @@
           encodeURIComponent(text);
         window.open(linkedinShareUrl, "_blank", "width=600,height=400");
       };
-
+// NOTE: Need to look at how we can add an image
       document.getElementById("share-twitter").onclick = function () {
         var imageUrl = document.getElementById("share-image").src;
         var text = "Check out this awesome image!";
@@ -78,7 +84,7 @@
           encodeURIComponent(imageUrl);
         window.open(pinterestShareUrl, "_blank", "width=600,height=400");
       };
-
+// NOTE: Need to configure the code for native share
       document.getElementById("native-share-button").onclick = function () {
         var imageUrl = document.getElementById("share-image").src;
         var text = "Check out this awesome image!";
