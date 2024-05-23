@@ -37,7 +37,9 @@
         var facebookShareUrl =
           "https://www.facebook.com/sharer/sharer.php?u=" +
           encodeURIComponent(imageUrl) +
-          "&message=" +
+          "&description=" +
+          encodeURIComponent(text)+
+          "&caption=" +
           encodeURIComponent(text);
         window.open(facebookShareUrl, "_blank", "width=600,height=400");
       };
