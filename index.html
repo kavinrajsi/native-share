@@ -177,6 +177,13 @@
               event.preventDefault(); // Prevent default anchor behavior
               console.log(url);
               document.getElementById("share-image").src = url; // Set the src attribute of the image
+              var img = document.getElementById("share-image");
+          var link = document.createElement("a");
+          link.href = img.src;
+          link.download = "image.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
             });
         })
         .catch((error) => {
