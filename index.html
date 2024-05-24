@@ -4,8 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Awesome Image Website Share</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.js"
+      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="./blob.js"></script>
+    <script src="./canvas-toBlob.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <style>
+      .cert-wrapper {
+        position: relative;
+      }
+      .name-block {
+        justify-content: center;
+        align-items: flex-end;
+        margin-right: 1rem;
+        display: flex;
+        position: absolute;
+        top: 37%;
+        bottom: auto;
+        left: 0%;
+        right: 0%;
+      }
+    </style>
   </head>
   <body>
+    <div id="content" class="cert-wrapper">
+      <img
+        src="./hero.jpeg"
+        width="Auto"
+        id="certificateImage"
+        alt=""
+        class="image-full"
+      />
+      <div class="name-block">
+        <h1 id="result" class="heading-style-h3 is-new">kavinraj si</h1>
+      </div>
+    </div>
+
     <img
       id="share-image"
       src="https://native-share.vercel.app/test.png"
@@ -13,6 +53,7 @@
       style="display: none"
     />
     <div>
+      <button id="download">Download Image</button>
       <button id="download-image">Download</button>
       <button id="share-facebook">Share on Facebook</button>
       <button id="share-linkedin">Share on LinkedIn</button>
@@ -22,9 +63,16 @@
     </div>
 
     <script>
+      document.getElementById("download").onclick = function () {
+        html2canvas(document.querySelector("#content")).then((canvas) => {
+          // document.body.appendChild(canvas)
+        });
+      };
+
       // document
       //   .getElementById("download-image")
-      //   .addEventListener("click", function () {
+      //   .addEventListener("click", function (event) {
+      //     event.preventDefault(); // Prevent default anchor behavior
       //     var img = document.getElementById("share-image");
       //     var link = document.createElement("a");
       //     link.href = img.src;
@@ -33,18 +81,6 @@
       //     link.click();
       //     document.body.removeChild(link);
       //   });
-
-      document.getElementById("download-image").addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent default anchor behavior
-    var img = document.getElementById("share-image");
-    var link = document.createElement("a");
-    link.href = img.src;
-    link.download = "image.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-});
-
 
       // NOTE: Need to look at how we can add an description
       document.getElementById("share-facebook").onclick = function () {
@@ -114,6 +150,38 @@
           alert("Your browser does not support the native share feature.");
         }
       };
+    </script>
+
+    <script>
+      // Initialize Firebase with your config
+      const firebaseConfig = {
+        apiKey: "AIzaSyD-vsblELU17PZm2er8B8Lkbo2QQg_07WM",
+        authDomain: "certificate-91b26.firebaseapp.com",
+        projectId: "certificate-91b26",
+        storageBucket: "certificate-91b26.appspot.com",
+        messagingSenderId: "918378444843",
+        appId: "1:918378444843:web:e28d2b80e038ddf13f926e",
+        measurementId: "G-Z2H7XV1FN7",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const storageRef = firebase.storage().ref();
+
+      window.imageFilename = "certificate_of_kavinraj_1716573494522.png";
+      storageRef
+        .child(window.imageFilename)
+        .getDownloadURL()
+        .then((url) => {
+          document
+            .getElementById("download-image")
+            .addEventListener("click", function (event) {
+              event.preventDefault(); // Prevent default anchor behavior
+              console.log(url);
+              document.getElementById("share-image").src = url; // Set the src attribute of the image
+            });
+        })
+        .catch((error) => {
+          console.error("Error getting download URL: ", error);
+        });
     </script>
   </body>
 </html>
