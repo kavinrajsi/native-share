@@ -4,22 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Awesome Image Website Share</title>
-    <!-- Open Graph metadata -->
-    <meta property="og:title" content="Awesome Image" />
-    <meta property="og:type" content="article" />
-    <meta property="og:description" content="Check out this awesome image!" />
-    <meta
-      property="og:image"
-      content="https://native-share.vercel.app/test.png"
-    />
-    <meta property="og:url" content="https://native-share.vercel.app" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Awesome Image" />
-    <meta name="twitter:description" content="Awesome Image Description" />
-    <meta
-      name="twitter:image"
-      content="https://native-share.vercel.app/test.png"
-    />
   </head>
   <body>
     <img
@@ -38,17 +22,29 @@
     </div>
 
     <script>
-      document
-        .getElementById("download-image")
-        .addEventListener("click", function () {
-          var img = document.getElementById("share-image");
-          var link = document.createElement("a");
-          link.href = img.src;
-          link.download = "image.png";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
+      // document
+      //   .getElementById("download-image")
+      //   .addEventListener("click", function () {
+      //     var img = document.getElementById("share-image");
+      //     var link = document.createElement("a");
+      //     link.href = img.src;
+      //     link.download = "image.png";
+      //     document.body.appendChild(link);
+      //     link.click();
+      //     document.body.removeChild(link);
+      //   });
+
+      document.getElementById("download-image").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default anchor behavior
+    var img = document.getElementById("share-image");
+    var link = document.createElement("a");
+    link.href = img.src;
+    link.download = "image.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
+
 
       // NOTE: Need to look at how we can add an description
       document.getElementById("share-facebook").onclick = function () {
