@@ -12,10 +12,7 @@
       property="og:image"
       content="https://native-share.vercel.app/test.png"
     />
-    <meta
-      property="og:url"
-      content="https://native-share.vercel.app"
-    />
+    <meta property="og:url" content="https://native-share.vercel.app" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Awesome Image" />
     <meta name="twitter:description" content="Awesome Image Description" />
@@ -29,8 +26,10 @@
       id="share-image"
       src="https://native-share.vercel.app/test.png"
       alt="Share Image"
+      style="display: none"
     />
     <div>
+      <button id="download-image">Download</button>
       <button id="share-facebook">Share on Facebook</button>
       <button id="share-linkedin">Share on LinkedIn</button>
       <button id="share-twitter">Share on Twitter</button>
@@ -39,7 +38,19 @@
     </div>
 
     <script>
-// NOTE: Need to look at how we can add an description
+      document
+        .getElementById("download-image")
+        .addEventListener("click", function () {
+          var img = document.getElementById("share-image");
+          var link = document.createElement("a");
+          link.href = img.src;
+          link.download = "image.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+
+      // NOTE: Need to look at how we can add an description
       document.getElementById("share-facebook").onclick = function () {
         var imageUrl = document.getElementById("share-image").src;
         var text = "Check out this awesome image!";
@@ -60,7 +71,7 @@
           encodeURIComponent(text);
         window.open(linkedinShareUrl, "_blank", "width=600,height=400");
       };
-// NOTE: Need to look at how we can add an image
+      // NOTE: Need to look at how we can add an image
       document.getElementById("share-twitter").onclick = function () {
         var imageUrl = document.getElementById("share-image").src;
         var text = "Check out this awesome image!";
@@ -84,7 +95,7 @@
           encodeURIComponent(imageUrl);
         window.open(pinterestShareUrl, "_blank", "width=600,height=400");
       };
-// NOTE: Need to configure the code for native share
+      // NOTE: Need to configure the code for native share
       document.getElementById("native-share-button").onclick = function () {
         var imageUrl = document.getElementById("share-image").src;
         var text = "Check out this awesome image!";
