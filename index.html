@@ -1,194 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Awesome Image Website Share</title>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.slim.js"
-      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="./blob.js"></script>
-    <script src="./canvas-toBlob.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
-    <style>
-      .cert-wrapper {
-        position: relative;
-      }
-      .name-block {
-        justify-content: center;
-        align-items: flex-end;
-        margin-right: 1rem;
-        display: flex;
-        position: absolute;
-        top: 37%;
-        bottom: auto;
-        left: 0%;
-        right: 0%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content" class="cert-wrapper">
-      <img
-        src="./hero.jpeg"
-        width="Auto"
-        id="certificateImage"
-        alt=""
-        class="image-full"
-      />
-      <div class="name-block">
-        <h1 id="result" class="heading-style-h3 is-new">kavinraj si</h1>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awesome Image Website Share</title>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@yourtwitterhandle">
+  <meta name="twitter:title" content="Title of Your Content">
+  <meta name="twitter:description" content="Description of Your Content">
+  <meta name="twitter:image" content="./images/hero.jpeg">
+
+  <meta property="og:url" content="./index.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Title of Your Content">
+  <meta property="og:description" content="Description of Your Content">
+  <meta property="og:image" content="./images/hero.jpeg">
+  <meta property="og:site_name" content="Your Website Name">
+
+  <meta name="title" content="Title of Your Content">
+  <meta name="description" content="Description of Your Content">
+
+</head>
+
+<body>
+
+  <header></header>
+
+  <main>
+    <div class="jumbotron" id="jumbotron">
+      <h1 id="name">Name</h1>
+      <h1 id="email">name@domain.text</h1>
+      <p class="lead">Always a pleasure for developer application.</p>
     </div>
 
-    <img
-      id="share-image"
-      src="https://native-share.vercel.app/test.png"
-      alt="Share Image"
-      style="display: none"
-    />
     <div>
-      <button id="download">Download Image</button>
-      <button id="download-image">Download</button>
       <button id="share-facebook">Share on Facebook</button>
       <button id="share-linkedin">Share on LinkedIn</button>
       <button id="share-twitter">Share on Twitter</button>
       <button id="share-pinterest">Share on Pinterest</button>
-      <button id="native-share-button">Share</button>
+      <button id="native-share-button">Native Share</button>
     </div>
+  </main>
 
-    <script>
-      document.getElementById("download").onclick = function () {
-        html2canvas(document.querySelector("#content")).then((canvas) => {
-          // document.body.appendChild(canvas)
+  <footer class="footer" id="footer" style="display: none;">
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $(document).ready(function () {
+      var url = window.location.href;
+
+      // Function to extract query parameters from the URL
+      function getParameterByName(name, url) {
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      // Get the name and email parameters from the URL
+      var nameParam = getParameterByName('name', url);
+      var emailParam = getParameterByName('email', url);
+
+      // Set the values to the respective HTML elements using jQuery
+      $('#name').html(nameParam);
+      $('#email').html(emailParam);
+
+      // $('#download').on('click', function () {
+      html2canvas(document.querySelector("#jumbotron")).then(canvas => {
+        var imageDataURL = canvas.toDataURL('image/png');
+        // Send imageDataURL to server for storage
+        console.log(imageDataURL);
+        // Create a new Image object
+        var image = new Image();
+
+        // Set the src attribute to the data URL
+        image.src = imageDataURL;
+
+        // If you need to handle errors (though not common with data URLs)
+        $(image).on('error', function () {
+          console.log('Error loading image');
         });
-      };
 
-      // document
-      //   .getElementById("download-image")
-      //   .addEventListener("click", function (event) {
-      //     event.preventDefault(); // Prevent default anchor behavior
-      //     var img = document.getElementById("share-image");
-      //     var link = document.createElement("a");
-      //     link.href = img.src;
-      //     link.download = "image.png";
-      //     document.body.appendChild(link);
-      //     link.click();
-      //     document.body.removeChild(link);
-      //   });
+        //NOTE: Need to try with file-saver.js
+        // AJAX request to send data to server
+        $.ajax({
+          type: 'POST',
+          url: 'save_image.php', // Replace with your server-side script URL
+          data: {
+            imageData: imageDataURL
+          },
+          success: function (response) {
+            console.log('Image saved successfully on server:', response);
+            // Parse the JSON response to an object
+            var jsonResponse = JSON.parse(response);
 
-      // NOTE: Need to look at how we can add an description
-      document.getElementById("share-facebook").onclick = function () {
-        var imageUrl = document.getElementById("share-image").src;
-        var text = "Check out this awesome image!";
-        var facebookShareUrl =
-          "https://www.facebook.com/sharer/sharer.php?u=" +
-          encodeURIComponent(imageUrl) +
-          "";
-        window.open(facebookShareUrl, "_blank", "width=600,height=400");
-      };
+            // Extract the image URL from the parsed object
+            var imageUrl = 'https://demo.madarth.com/test/' + jsonResponse.file;
 
-      document.getElementById("share-linkedin").onclick = function () {
-        var imageUrl = document.getElementById("share-image").src;
-        var text = "Check out this awesome image!";
-        var linkedinShareUrl =
-          "https://www.linkedin.com/shareArticle?mini=true&url=" +
-          encodeURIComponent(imageUrl) +
-          "&title=" +
-          encodeURIComponent(text);
-        window.open(linkedinShareUrl, "_blank", "width=600,height=400");
-      };
-      // NOTE: Need to look at how we can add an image
-      document.getElementById("share-twitter").onclick = function () {
-        var imageUrl = document.getElementById("share-image").src;
-        var text = "Check out this awesome image!";
-        var twitterShareUrl =
-          "https://twitter.com/intent/tweet?url=" +
-          encodeURIComponent(imageUrl) +
-          "&text=" +
-          encodeURIComponent(text);
-        window.open(twitterShareUrl, "_blank", "width=600,height=400");
-      };
+            console.log(imageUrl);
+            // Extract the image URL from the response
+            // var imageUrl = response.file; // Assuming response.file contains the image URL
 
-      document.getElementById("share-pinterest").onclick = function () {
-        var imageUrl = document.getElementById("share-image").src;
-        var text = "Check out this awesome image!";
-        var pinterestShareUrl =
-          "https://pinterest.com/pin/create/button/?url=" +
-          encodeURIComponent(imageUrl) +
-          "&description=" +
-          encodeURIComponent(text) +
-          "&media=" +
-          encodeURIComponent(imageUrl);
-        window.open(pinterestShareUrl, "_blank", "width=600,height=400");
-      };
-      // NOTE: Need to configure the code for native share
-      document.getElementById("native-share-button").onclick = function () {
-        var imageUrl = document.getElementById("share-image").src;
-        var text = "Check out this awesome image!";
-        var url = imageUrl; // Assuming you want to share the image URL
+            // Update og:image meta tag
+            $('meta[property="og:image"]').attr('content', imageUrl);
 
-        if (navigator.share) {
-          navigator
-            .share({
-              title: "Awesome Image",
-              text: text,
-              url: url,
-            })
-            .then(() => {
-              console.log("Successful share");
-            })
-            .catch((error) => {
-              console.error("Error sharing:", error);
-            });
-        } else {
-          alert("Your browser does not support the native share feature.");
-        }
-      };
-    </script>
+            // Update twitter:image meta tag
+            $('meta[name="twitter:image"]').attr('content', imageUrl);
 
-    <script>
-      // Initialize Firebase with your config
-      const firebaseConfig = {
-        apiKey: "AIzaSyD-vsblELU17PZm2er8B8Lkbo2QQg_07WM",
-        authDomain: "certificate-91b26.firebaseapp.com",
-        projectId: "certificate-91b26",
-        storageBucket: "certificate-91b26.appspot.com",
-        messagingSenderId: "918378444843",
-        appId: "1:918378444843:web:e28d2b80e038ddf13f926e",
-        measurementId: "G-Z2H7XV1FN7",
-      };
-      firebase.initializeApp(firebaseConfig);
-      const storageRef = firebase.storage().ref();
+            // Append the image URL to #footer
+            $('#footer').append('<img src="' + imageUrl + '" /><p>');
 
-      window.imageFilename = "certificate_of_kavinraj_1716573494522.png";
-      storageRef
-        .child(window.imageFilename)
-        .getDownloadURL()
-        .then((url) => {
-          document
-            .getElementById("download-image")
-            .addEventListener("click", function (event) {
-              event.preventDefault(); // Prevent default anchor behavior
-              console.log(url);
-              document.getElementById("share-image").src = url; // Set the src attribute of the image
-              var img = document.getElementById("share-image");
-          var link = document.createElement("a");
-          link.href = img.src;
-          link.download = "image.png";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-            });
-        })
-        .catch((error) => {
-          console.error("Error getting download URL: ", error);
+            // NOTE: Need to look at how we can add an description
+            document.getElementById("share-facebook").onclick = function () {
+              var text = "Check out this awesome image!";
+              var facebookShareUrl =
+                "https://www.facebook.com/sharer/sharer.php?u=" +
+                encodeURIComponent(imageUrl) +
+                "";
+              window.open(facebookShareUrl, "_blank", "width=600,height=400");
+            };
+
+            document.getElementById("share-linkedin").onclick = function () {
+              var text = "Check out this awesome image!";
+              var linkedinShareUrl =
+                "https://www.linkedin.com/shareArticle?mini=true&url=" +
+                encodeURIComponent(imageUrl) +
+                "&title=" +
+                encodeURIComponent(text);
+              window.open(linkedinShareUrl, "_blank", "width=600,height=400");
+            };
+            // NOTE: Need to look at how we can add an image
+            document.getElementById("share-twitter").onclick = function () {
+              var text = "Check out this awesome image html2canvas!";
+              var twitterShareUrl =
+                "https://twitter.com/intent/tweet?url=" +
+                encodeURIComponent(imageUrl) +
+                "&text=" +
+                encodeURIComponent(text);
+              window.open(twitterShareUrl, "_blank", "width=600,height=400");
+            };
+
+            document.getElementById("share-pinterest").onclick = function () {
+              var text = "Check out this awesome image html2canvas!";
+              var pinterestShareUrl =
+                "https://pinterest.com/pin/create/button/?url=" +
+                encodeURIComponent(imageUrl) +
+                "&description=" +
+                encodeURIComponent(text) +
+                "&media=" +
+                encodeURIComponent(imageUrl);
+              window.open(pinterestShareUrl, "_blank", "width=600,height=400");
+            };
+            // NOTE: Need to configure the code for native share
+            document.getElementById("native-share-button").onclick = function () {
+              var text = "Check out this awesome image html2canvas!";
+              var url = imageUrl;
+
+              if (navigator.share) {
+                navigator
+                  .share({
+                    title: "Awesome Image",
+                    text: text,
+                    url: url,
+                  })
+                  .then(() => {
+                    console.log("Successful share");
+                  })
+                  .catch((error) => {
+                    console.error("Error sharing:", error);
+                  });
+              } else {
+                alert("Your browser does not support the native share feature.");
+              }
+            };
+
+          },
+          error: function () {
+            console.error('Error saving image on server');
+          }
         });
-    </script>
-  </body>
+      });
+    });
+
+    // });
+  </script>
+</body>
+
 </html>
